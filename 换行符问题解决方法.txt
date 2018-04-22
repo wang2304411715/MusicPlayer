@@ -1,0 +1,40 @@
+
+参考网址：https://blog.csdn.net/github_30605157/article/details/56680990
+
+单一仓库的换行符局部配置
+当然，有更好的方法解决换行符不统一的问题——使用.gitattributes文件统一换行符。这种方法是针对某个仓库进行换行符的统一配置，即时你已经进行了全局配置。
+
+另外，这个文件有点儿类似于.gitignore，不仅名字很类似，使用方式，编写语法也很像。这个文件必须位于仓库的根目录，可以像其他文件一样进行修改、提交。下面介绍如何编写这个文件：
+
+文件内容看起来像一张表格，总共分为两列：左边一列是git要匹配的文件名；右边是git需要采用的换行符格式。下面我们来看一个栗子：
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.c text
+*.h text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+
+如果你熟悉.gitignore的话，你会觉得上面这个文件的左边一列很熟悉，这里我们就不再赘述了，不熟悉的话，请自行查阅相关资料。唯一的不同就是.gitattributes文件多了右边一列，如text, text eol=crlf, binary，刚刚我们也说过这一列是用来设置左边对应文件使用的换行符格式的，左右两列用空格隔开。下面我们来详细介绍下右边一列的语法：
+
+text=auto 
+让git自行处理左边匹配的文件使用何种换行符格式，这是默认选项。
+
+text eol=crlf 
+对左边匹配的文件统一使用CRLF换行符格式，如果有文件中出现LF将会转换成CRLF。
+
+text eol=lf 
+对左边匹配的文件统一使用LF换行符格式，如果有文件中出现CRLF将会转换成LF。
+
+binary 
+告诉git这不是文本文件，不应该对其中的换行符进行改变。另外，binary和符号-text -diff是等价的。
+
+上面这些语法应该已经足够了，如果有兴趣的，可以自行查阅相关资料，比如官方的资料：https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes。
