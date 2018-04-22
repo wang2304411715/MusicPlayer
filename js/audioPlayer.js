@@ -304,10 +304,10 @@ AudioPlayer.prototype = {
 					var that = this;
 					that.randomBgImg(that.bgImg);
 					var newSrc = that.getDataSrc(that.audio,sourceArr,order);
-					that.getLyrics(newSrc);
 					that.audio.src = "source/" + newSrc + ".mp3";
 					that.audio.currentTime = 0;
 					that.playState();
 					that.audio.play();
+					that.getLyrics(newSrc);
 				},
 };
