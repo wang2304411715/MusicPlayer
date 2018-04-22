@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="HTML5的Audio标签实现歌词同步！">
+    <meta name="author" content="wangzhonglu">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+	<title>音乐播放器</title>
+
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+ <div class="main" data-bg="bg1">
+ 	<div class="content">
+ 		<div class="lyric-section">
+ 			<ul id="lyrics_content"></ul>
+ 		</div>
+ 		<audio src="source/01chengfu.mp3" data-src="01chengfu">
+			<p>您的浏览器不支持 audio 元素,您的浏览器需要升级到更高版本！</p>
+			<p>Internet Explorer 9+, Firefox, Opera, Chrome, 和 Safari 都支持 audio 元素。</p>
+		</audio>
+		<div class="controls">
+			<div class="previous"></div>
+			<div class="play"></div>
+			<div class="next"></div>
+		</div>
+ 	</div>
+ </div>
+ 	<script src="js/audioPlayer.js"></script>
+	<script>
+		var audioPlayer = new AudioPlayer();
+		audioPlayer.init();
+	</script>
+</body>
+</html>

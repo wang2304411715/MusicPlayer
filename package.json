@@ -1,0 +1,11 @@
+{
+  "name": "musicplayer",
+  "version": "1.0.0",
+  "description": "HTML5的Audio标签实现歌词同步！",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wangzhonglu",
+  "license": "ISC"
+}

@@ -1,0 +1,136 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+div.main {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	max-width: 1920px;
+	max-height: 1080px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: url(../images/bg1.jpg) no-repeat center;	
+}
+
+div.lyric-section {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 90px;
+	bottom: 130px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+#lyrics_content {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	color: #69FD04;
+}
+
+#lyrics_content > li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+}
+
+li.active {
+	color: #FD0418;
+}
+
+div.content {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+}
+
+div.controls {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 200px;
+	height: 30px;
+	border-radius: 20px;
+	opacity: .6;
+	background-color: #fff;
+}
+
+div.controls:hover {
+	opacity: .8;
+}
+
+div.previous {
+	position: absolute;
+	left: 20px;
+	bottom: 2px;
+	width: 26px;
+	height: 26px;
+	background: url(../images/prev.png) no-repeat center;
+	background-size: 24px 24px;
+}
+
+div.next {
+	position: absolute;
+	right: 20px;
+	bottom: 2px;
+	width: 26px;
+	height: 26px;
+	background: url(../images/next.png) no-repeat center;
+	background-size: 24px 24px;
+}
+
+div.play {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	bottom: 2px;
+	width: 26px;
+	height: 26px;
+	background: url(../images/play.png) no-repeat center;
+	background-size: 24px 24px;
+}
+
+.pause {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	bottom: 2px;
+	width: 26px;
+	height: 26px;
+	background: url(../images/pause.png) no-repeat center;
+	background-size: 24px 24px;
+}
+
+p {
+	color: red;
+	font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
