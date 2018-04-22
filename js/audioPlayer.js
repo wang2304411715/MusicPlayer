@@ -12,17 +12,19 @@
 			4、对class的增删改查,(classList)；
 			5、缓动动画；
 			6、使用监听addEventListener；
-			7、自定义属性操作data-*,(dataset)
-			8、动画时防止抖动，节流
-			9、构造函数和原型的封装
-
-		功能：播放、暂停、下一首、上一首、歌词同步、随机背景；
+			7、自定义属性操作data-*,(dataset)；
+			8、动画时防止抖动，节流；
+			9、封装对象；
+			10、字体阴影；
+		功能：播放、暂停、下一首、上一首、歌词同步、随机背景、加载提示；
 
  */ 
 
 function AudioPlayer() {
-	this.lyricPanel = document.querySelector("#lyrics_content");
 	this.panelParent = document.querySelector(".lyric-section");
+	this.lyricPanel = document.querySelector("#lyrics_content");
+	this.loadingAudio = document.querySelector(".loadingAudio");
+	this.loadingLyric = document.querySelector(".loadingLyric");
 	this.background = document.querySelector(".main");
 	this.audio = document.querySelector("audio");
 	this.playBtn = document.querySelector(".play");
@@ -34,9 +36,7 @@ function AudioPlayer() {
 
 AudioPlayer.prototype = {
 	init: function () {
-		var that = this;
-		that.getLyrics(that.songs[0]);
-		that.bindEvent();
+		this.bindEvent();
 	},
 
 	// 输入歌名，以ajax获取歌词资源，得到字符串然后处理：
@@ -115,6 +115,8 @@ AudioPlayer.prototype = {
 				    	var lineContentArr = contentArr[j];
 				    	domStr += "<li class='changeColor' data-time=" + lineContentArr[0] + ">" + lineContentArr[1] + "</li>";
 					}
+					this.loadingLyric.classList.add("hiddenNone");
+					this.lyricPanel.classList.remove("hiddenNone");
 					this.lyricPanel.innerHTML = domStr;
 				},
 
@@ -130,14 +132,14 @@ AudioPlayer.prototype = {
 							var liDomNext = changeLinsArr[i + 1];
 							var liDomNextTime = liDomNext.dataset.time;
 							if (currentTime < liDomNextTime) {
-								this.setClass(changeLinsArr,"active","changeColor");
+								this.setArrClass(changeLinsArr,"active","changeColor");
 								//当前行添加active变色
 								liDom.classList.add("active");
 								return liDom;
 							}
 						}
 						if (i == (changeLinsArrLen - 1) && liDomTime <= currentTime) {
-							this.setClass(changeLinsArr,"active","changeColor");
+							this.setArrClass(changeLinsArr,"active","changeColor");
 							//表明这是最后一行
 							liDom.classList.add("active");
 							return liDom;
@@ -146,7 +148,7 @@ AudioPlayer.prototype = {
 				},
 
 	// 清理domArr上的class并添加class
-	setClass: function (domArr,removeClass,addClass) {
+	setArrClass: function (domArr,removeClass,addClass) {
 					for (var i = 0; i < domArr.length; i++) {
 						var dom = domArr[i];
 						dom.classList.remove(removeClass);
@@ -224,7 +226,7 @@ AudioPlayer.prototype = {
 					},false);
 
 					// 监听当前播放时间
-					audio.ontimeupdate = function() {
+					audio.addEventListener("timeupdate",function() {
 						if (audio.currentTime == 0) {
 							var ulDom = that.lyricPanel;
 							clearInterval(ulDom.timer);
@@ -238,12 +240,33 @@ AudioPlayer.prototype = {
 							that.playBtn.className = "play";
 							that.nextSong(that.songs,1);
 						}
-					};
+					},false);
+
+					// 因缓冲而暂停时调用
+					audio.addEventListener("waiting",function() {
+						console.log("waiting");
+						that.lyricPanel.classList.add("hiddenNone");
+						that.loadingAudio.classList.remove("hiddenNone");
+					},false);
+
+					// 缓冲完成时调用
+					audio.addEventListener("canplay",function() {
+						that.loadingAudio.classList.add("hiddenNone");
+						that.loadingLyric.classList.remove("hiddenNone");
+						that.getLyrics(that.songs[0]);						
+					},false);
+					
+					// 有时canplay不会调用，备用
+					audio.addEventListener("canplaythrough",function() {
+						that.loadingAudio.classList.add("hiddenNone");
+						that.loadingLyric.classList.remove("hiddenNone");
+						that.getLyrics(that.songs[0]);						
+					},false);
 
 					// 监听窗口变化
-					window.onresize = function(){
+					window.addEventListener("resize",function () {
 						that.lyricsScroll(that.currentLine(audio.currentTime));
-					};
+					},false);
 				},
 
 	// 获取audio上的data-src并重新设置data-src,然后返回最新src
