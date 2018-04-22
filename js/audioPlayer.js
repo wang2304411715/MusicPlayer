@@ -30,6 +30,7 @@ function AudioPlayer() {
 	this.playBtn = document.querySelector(".play");
 	this.lastBtn = document.querySelector(".previous");
 	this.nextBtn = document.querySelector(".next");
+	this.newSrc = "01chengfu";
 	this.songs = ["01chengfu","02ganjuezijishijuxing","03weiyenadedongtian","04woleyi"];
 	this.bgImg = ["bg1","bg2","bg3","bg4","bg5","bg6","bg7","bg8"];
 }
@@ -244,7 +245,6 @@ AudioPlayer.prototype = {
 
 					// 因缓冲而暂停时调用
 					audio.addEventListener("waiting",function() {
-						console.log("waiting");
 						that.lyricPanel.classList.add("hiddenNone");
 						that.loadingAudio.classList.remove("hiddenNone");
 					},false);
@@ -253,14 +253,14 @@ AudioPlayer.prototype = {
 					audio.addEventListener("canplay",function() {
 						that.loadingAudio.classList.add("hiddenNone");
 						that.loadingLyric.classList.remove("hiddenNone");
-						that.getLyrics(that.songs[0]);						
+						that.getLyrics(that.newSrc);
 					},false);
 					
 					// 有时canplay不会调用，备用
 					audio.addEventListener("canplaythrough",function() {
 						that.loadingAudio.classList.add("hiddenNone");
 						that.loadingLyric.classList.remove("hiddenNone");
-						that.getLyrics(that.songs[0]);						
+						that.getLyrics(that.newSrc);
 					},false);
 
 					// 监听窗口变化
@@ -304,10 +304,10 @@ AudioPlayer.prototype = {
 					var that = this;
 					that.randomBgImg(that.bgImg);
 					var newSrc = that.getDataSrc(that.audio,sourceArr,order);
+					this.newSrc = newSrc;
 					that.audio.src = "source/" + newSrc + ".mp3";
 					that.audio.currentTime = 0;
 					that.playState();
 					that.audio.play();
-					that.getLyrics(newSrc);
 				},
 };
